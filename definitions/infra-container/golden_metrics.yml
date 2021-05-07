@@ -1,18 +1,32 @@
 cpuUsage:
   title: CPU usage (cores)
-  query:
-    select: max(docker.container.cpuUsedCores) or max(k8s.container.cpuUsedCores) as 'CPU used cores'
+  queries:
+    newRelic:
+      select: max(docker.container.cpuUsedCores) or max(k8s.container.cpuUsedCores) AS 'CPU used cores'
+    newRelicSample:
+      select: max(cpuUsedCores) AS 'CPU used cores'
+      from: ContainerSample, K8sContainerSample
 cpuUtilization:
   title: CPU Utilization (%)
-  query:
-    select: max(docker.container.cpuPercent) or max(k8s.container.cpuCoresUtilization) AS 'CPU Utilization
-      (%)'
+  queries:
+    newRelic:
+      select: max(docker.container.cpuPercent) or max(k8s.container.cpuCoresUtilization) AS 'CPU Utilization (%)'
+    newRelicSample:
+      select: max(cpuCoresUtilization) or max(cpuPercent) AS 'CPU Utilization (%)'
+      from: ContainerSample, K8sContainerSample
 memoryUsage:
   title: Memory usage (bytes)
-  query:
-    select: max(docker.container.memoryUsageBytes) or max(k8s.container.memoryWorkingSetBytes) AS 'Memory
-      used (bytes)'
+  queries:
+    newRelic:
+      select: max(docker.container.memoryUsageBytes) or max(k8s.container.memoryWorkingSetBytes) AS 'Memory used (bytes)'
+    newRelicSample:
+      select: max(memoryUsageBytes) or max(memoryWorkingSetBytes) AS 'Memory used (bytes)'
+      from: ContainerSample, K8sContainerSample
 storageUsage:
   title: Storage usage (bytes)
-  query:
-    select: max(docker.container.ioTotalBytes) or max(k8s.container.fsUsedPercent) AS 'Storage used (bytes)'
+  queries:
+    newRelic:
+      select: max(docker.container.ioTotalBytes) or max(k8s.container.fsUsedPercent) AS 'Storage used (bytes)'
+    newRelicSample:
+      select: max(ioTotalBytes) or max(fsUsedPercent) AS 'Storage used (bytes)'
+      from: ContainerSample, K8sContainerSample
